@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+{% load staticfiles %}
+{% block head %}
+<script>
+    /*global $*/
+    $(document).ready(function(){
+      //$("#id_score_1").after('<img src="{{photo}}">')
+      //$("#id_score_2").after('<img src="{{photo}}">')
+    });
+</script>
+<script>
+    /*global $*/
+    $(":input:radio[name=sample]:checked").val();
+</script>
+
+{% endblock%}
+
+{% block content %}
+<!-- style css & block head -->
+
+
+<br>
+<span style="padding-left:20px;"><img src="{%static 'icons/review.jpg' %}" style="height:25px; weight:25px;"></span>
+<span style="font-weight:bold; color:#ffae00;"> 리뷰 등록 </span>
+<hr>
+
+<table style="padding:20px; color:#C4C4C4;">
+    <tr>
+        <td>
+            <div style="padding-left:20px;">
+                <img src="{{photo}}" class="user_profile"/><br><!--사진-->
+            </div>
+        </td>
+        <td style="padding:20px;">
+            {{sitter}}<br> <!--시터이름-->
+            주소: 아직 없음<br><!--주소-->
+            {{contact.start_date}} ~ {{contact.end_date}}<br> <!--컨택날짜-->
+        </td>
+    </tr>
+</table>
+
+<div style="padding:20px;">
+    <span>평가하기</span><br>
+    <span style="font-size:0.7em;">시터의 서비스에 만족하셨나요?<br>
+    서비스의 만족도를 숫자로 표현한다면 몇 점인지 알려주세요. 
+    </span>
+</div>
+<style>
+input[type="radio"]{display:none;}
+input:checked + label {background-color:#ffae00; color:#FFFFFF;}
+label{position:relative; padding:5px 10px; border:1px solid #ffae00; color:#ffae00;}
+</style>
+
+<div>
+    <form method="post" action="/contact/review/{{contact.id}}/">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td style="font-size:0.7em; padding-left:20px;">
+                      <!--<input type="radio" id="grade1" name="grade" value="1"><label for="grade1"><span>1</span></label>-->
+                     <input type="radio" id="id_score_0" name="score" value="1"><label for="id_score_0"><span>1</span></label></input>
+                     <input type="radio" id="id_score_1" name="score" value="2"><label for="id_score_1"><span>2</span></label></input>
+                     <input type="radio" id="id_score_2" name="score" value="3"><label for="id_score_2"><span>3</span></label></input>
+                     <input type="radio" id="id_score_3" name="score" value="4"><label for="id_score_3"><span>4</span></label></input>
+                     <input type="radio" id="id_score_4" name="score" value="5"><label for="id_score_4"><span>5</span></label></input>
+                     <input type="radio" id="id_score_5" name="score" value="6"><label for="id_score_5"><span>6</span></label></input>
+                     <input type="radio" id="id_score_6" name="score" value="7"><label for="id_score_6"><span>7</span></label></input>
+                     <input type="radio" id="id_score_7" name="score" value="8"><label for="id_score_7"><span>8</span></label></input>
+                     <input type="radio" id="id_score_8" name="score" value="9"><label for="id_score_8"><span>9</span></label></input>
+                     <input type="radio" id="id_score_9" name="score" value="10"><label for="id_score_9"><span>10</span></label></input>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="10">
+                    <div style="float:left; color:#ffae00; font-size:0.7em;padding-left:20px;">매우 불만족</div>
+                    <div style="float:right; color:#ffae00; font-size:0.7em;">매우 만족</div>
+                </td>
+            </tr>
+         </table>
+         <br><br>
+
+        <div style="padding-left:20px;">
+            <span>코멘트</span><br>
+            <span style="font-size:0.7em;">시터의 서비스에 대해 하실 말씀이 있으면 알려주세요.<br>
+            다음 사용자가 더 좋은 서비스를 받는 데 도움이 됩니다.
+            </span>
+            <br><br>
+            {{form.comment}}
+        </div>
+        
+        <br>
+        
+        <div>
+            <button type="submit" class="buttonStyle" style="width:100%;">
+                <div>
+                    등록하기
+                </div>
+            </button>
+        </div>
+    </form>
+
+</div>
+{% endblock %}

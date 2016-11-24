@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+<head>
+    <meta content="width=device-width">
+    <style>
+        html,body{
+            height:100%;
+        }
+        img{
+            width:100%;
+        }
+    </style>
+</head>
+
+<!-- 홈 -->
+
+<table width="100%">
+    <tr>
+        <td>
+            <a href="/home/1"> <!--tutorial page로 이동-->
+            <img src="{{STATIC_URL}}/static/images/main1.jpg"/>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="/home/2">
+            <img src="{{STATIC_URL}}/static/images/main2.jpg"/>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="/home/3">
+            <img src="{{STATIC_URL}}/static/images/main3.jpg"/>
+            </a>
+        </td>
+    </tr>
+</table>
+
+{% endblock %}

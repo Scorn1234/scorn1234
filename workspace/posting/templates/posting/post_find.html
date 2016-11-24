@@ -1,0 +1,161 @@
+{% load staticfiles %}
+
+<head>
+    
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+    <meta name="viewport" content="width=640px, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, user-scalable=no"> 
+
+
+
+    
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="posting/static/posting.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    
+    <!-- 날짜 -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+    <script>
+      /*global $*/
+      $(document).ready(function() {
+        $("#checkIn").datepicker();
+      });
+    
+      /*global $*/
+      $(document).ready(function() {
+        $("#checkOut").datepicker();
+      });
+    </script>
+    
+    <!-- 열기 닫기-->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+        /*global $*/
+        $(function () {
+            $(".checkbutton").click(function () {
+                $(".checkmenu").toggle();
+                //열기 닫기할때 높이 사이즈 부모 페이지로 전달
+                var height = ($("div.post_find").height())*6/5;
+                parent.resizeTopIframe(height);
+                
+                //열기닫기할때 text바꿈
+                $(this).text(function(i, text){
+                    return text === "닫기▲" ? "펼치기▼" : "닫기▲";
+                });
+            });
+        });
+    </script>
+    
+<style>
+
+.calBox{
+    width:46%; 
+    border:0px;
+}
+</style>
+    
+</head>
+
+<body>
+
+<div style="background:#f5f5f5; padding:20px 40px" class="post_find">
+
+    <form action=""> {% csrf_token %} <!--method="POST"-->
+    <!-- 날짜 --> <!--여기에 달력추가해야댐-->
+    <div>
+            <input style="width:46%; align:left; border:0px; height:20px"
+            id="checkIn" value="" placeholder="YY-MM-DD"/> ~
+            <input style="width:46%; align:right; border:0px; height:20px"
+            id="checkOut" value="" placeholder="YY-MM-DD"/>
+    </div>
+    <br>
+    
+    <!-- 지역 -->
+    <div style="color:#C4C4C4">
+        <input type="text" name="area" placeholder="현재 위치 인근"
+        style="width:80%; border:0px; height:20px">
+        <a href="https://petsitter2-damidam125.c9users.io/map"><img src="{%static 'icons/search.jpg'%}"></a><!--https://petsitter2-damidam125.c9users.io/map-->
+    </div>
+    <br>
+    
+    <!-- 옵션 -->
+    <div width="100%" style="color:#C4C4C4">
+        <span style="float:left">옵션</span>
+        <span class="checkbutton" style="float:right" onload="callResize(this)"/>
+            <div><p>펼치기▼</p></div>
+        </span>
+    </div>
+    
+    
+    <!-- 체크박스 -->
+    <br>
+    <div>
+    <table class="checkmenu" style="display:none; background-color:#FFFFFF; border:1px solid #FFFFFF">    
+
+        <!--동물 종류 {%for species in form_for_show.species_of_animal%}{{species}}{%endfor%}<br>-->
+        <tr>
+            <td class="optionSytle" style="width:35%; color:#545454">
+                <span>동물 종류</span>
+            </td>
+            <td>
+                    {%for species in form.species_of_animal%}{{species}}{%endfor%}
+            </td>
+        </tr>
+        <!--{%for species in form_for_show.species_of_animal%}{{species}}{%endfor%}<br>-->
+        <tr>
+             <td class="optionSytle" style="width:35%; color:#545454;">
+                <span>시터 성별</span>
+            </td>
+            <td>
+                <input type="radio" id="sex" value="none"><span>무관 </span> 
+                <input type="radio" id="sex" value="woman"><span>여자 </span>
+                <input type="radio" id="sex" value="man"><span>남자 </span>
+            </td>
+        </tr>
+            
+        <tr>
+             <td class="optionSytle" style="width:35%; color:#545454;">
+                <span>시터의 애완동물 유무</span>
+            </td>
+            <!--{%for number in form.number_of_animal%}{{number}}{%endfor%}<br>-->
+            <td>
+                <input type="radio" id="animal" value="none">무관  
+                <input type="radio" id="animal" value="has">있음  
+                <input type="radio" id="animal" value="hasnot">없음  
+            </td>
+        </tr>
+        
+        <tr>
+             <td class="optionSytle" style="width:35%; color:#545454;">
+                <span>주거 형태</span>
+            </td>
+            <td>
+                <input type="radio" id="house" value="none">무관  
+                <input type="radio" id="house" value="villa">빌라  
+                <input type="radio" id="house" value="home">주택  
+                <input type="radio" id="house" value="apart">아파트  
+                <input type="radio" id="house" value="officehotel">오피스텔  
+            </td>
+        </tr>
+        
+        <tr>
+             <td class="optionSytle" style="width:35%; color:#545454;">
+                <span>마당 유무</span>
+            </td>
+            <td>
+                <input type="radio" id="yard" value="none">무관  
+                <input type="radio" id="yard" value="has">있음  
+                <input type="radio" id="yard" value="hasnot">없음  
+            </td>
+        </tr>
+    </table>
+    </div>
+    </form>
+    
+</div>
+    
+</body>

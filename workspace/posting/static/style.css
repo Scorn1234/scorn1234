@@ -1,0 +1,152 @@
+@font-face{
+    font-family:'Glyphicons Halflings';
+    src:url(../fonts/glyphicons-halflings-regular.eot);
+    src:url(../fonts/glyphicons-halflings-regular.eot?#iefix) format('embedded-opentype') , url(../fonts/glyphicons-halflings-regular.woff) format('woff') , url(../fonts/glyphicons-halflings-regular.ttf) format('truetype') , url(../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format('svg')
+}
+
+html{
+    font-family:sans-serif;
+    -webkit-text-size-adjust:100%;
+    -ms-text-size-adjust:100%
+}
+
+body{
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size:20px;
+    line-height:1.42857143;
+    color:#000;
+    background-color:#ffffff;
+    padding: 0;
+    margin: 0;
+}
+
+button,input,optgroup,select,textarea{
+    margin:0;
+    font:inherit;
+    color:inherit
+}
+
+input,button,select,textarea{
+    font-family:inherit;
+    font-size:inherit;
+    line-height:inherit
+}
+
+
+@media print{
+    *,:before,:after{
+        color:#000!important;
+        text-shadow:none!important;
+        background:transparent!important;
+        -webkit-box-shadow:none!important;
+        box-shadow:none!important
+    }
+    a,a:visited{
+        text-decoration:underline
+    }
+    a[href]:after{
+        content:" (" attr(href) ")"
+    }
+    abbr[title]:after{
+        content:" (" attr(title) ")"
+    }
+    a[href^="#"]:after,a[href^="javascript:"]:after{
+        content:""
+    }
+    pre,blockquote{
+        border:1px solid #999;
+        page-break-inside:avoid
+    }
+    thead{
+        display:table-header-group
+    }
+    tr,img{
+        page-break-inside:avoid
+    }
+    img{
+        max-width:100%!important
+    }
+    p,h2,h3{
+        orphans:3;
+        widows:3
+    }
+    h2,h3{
+        page-break-after:avoid
+    }
+    select{
+        background:#fff!important
+    }
+    .navbar{
+        display:none
+    }
+    .btn>.caret,.dropup>.btn>.caret{
+        border-top-color:#000!important
+    }
+    .label{
+        border:1px solid #000
+    }
+    .table{
+        border-collapse:collapse!important
+    }
+    .table td,.table th{
+        background-color:#fff!important
+    }
+    .table-bordered th,.table-bordered td{
+        border:1px solid #ddd!important
+    }
+}
+
+.media-left,.media-right,.media-body{
+    display:table-cell;
+    vertical-align:top
+}
+.thumbnail{
+    display:table-cell;
+}
+.content{
+    display:table-cell;
+}
+.icons{
+    background-color: "red"; width:30px; height: 30px;
+    float: right
+}
+
+img.user_profile { 
+    width:80px;           /*100px*/
+	height:80px;
+    border-style: solid;
+    border-width: 3px;         /*3px*/
+    border-color: #c5c6c7;
+    border-radius: 50%; 
+}
+
+img.add_pet_image { 
+    width: 80px;
+	height: 80px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: #ffae00;
+    border-radius: 50%; 
+}
+
+img.add_pet_image_camera { 
+    width: 30px;
+	height: 30px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #FFFFFF;
+    border-radius: 50%; 
+}
+
+form {
+    display:inline;
+}
+
+
+#full-size{
+  /*height:100%;*/
+  width:100%;
+  overflow:hidden; /* or overflow:auto; if you want scrollbars */
+}
+
+

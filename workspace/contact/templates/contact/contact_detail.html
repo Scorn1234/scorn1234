@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% load staticfiles %}
+
+{% block head %}
+
+{% endblock%}
+
+{% block content %}
+
+<div>
+<form method="post" action="/contact/detail/{{contact.id}}/">
+
+{% csrf_token %}
+
+맡긴 사람 : 1. {{contact_id}}  2. {{contact.id}} 3. {{contact.owner}}<br>
+맡기고자 하는 날짜:<br>
+맡긴 펫 정보<br>
+요청 사항<br>
+
+
+
+</form>
+</div>
+
+
+{% endblock %}

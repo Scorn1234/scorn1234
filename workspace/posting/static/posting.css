@@ -1,0 +1,180 @@
+/* css의 주석은 이렇게 씁니다*/
+/* 배경색 :#f5f5f5 어두운 글씨색 : #545454 기본 글씨색: #C4C4C4 
+노란색: #ffae00 하트색: #ff0042 */
+
+a{
+    text-decoration:none;
+    color:#2f2f2f;
+    font-family:'Allerta',Helvetica,Arial,sans-serif
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-family:'Arvo',serif
+}
+
+.catg_title{
+    font-size:20em
+}
+
+.basicBackground{
+    background-color:#f5f5f5;
+    color :#f5f5f5;
+    height: 100%;
+}
+
+.basicStyle{
+    color:#C4C4C4;
+}
+
+/*
+.sitterInfo{
+    padding:10px;
+    font-weight: bold;
+    font-size:0.5em;
+    color:#C4C4C4;
+}
+*/
+
+
+.buttonStyle{
+    background-color:#ffae00; 
+    text-align:center;
+    font-weight: bold;
+    font-size:0.95em; 
+    border:10px solid #f5f5f5;
+    padding:14px;
+    color:#FFFFFF;
+}
+
+/*상자 height */
+.inputStyle{
+    height:10%;
+}
+img.add_post { 
+    width: 65px;
+	height: 65px;
+    border-radius: 50%; 
+    bottom:35px;
+    right:35px;
+    z-index:999;
+    position:fixed;
+    box-shadow: 0 1px 2px 0 #777;
+}
+
+img.edit_post { 
+    width: 65px;
+	height: 65px;
+    border-radius: 50%; 
+    bottom:35px;
+    right:35px;
+    z-index:999;
+    position:fixed;
+    box-shadow: 0 1px 2px 0 #777;
+    margin-bottom:80px;
+}
+
+img.sitter_icon { 
+    width: 20px;
+	height: 20px;
+    border-radius: 100%; 
+}
+
+img.rate { 
+	height: 15px;
+}
+
+.menu a {  
+    cursor: pointer;  
+}  
+.menu .hide {  
+    display: none;  
+} 
+
+/* 컨택 내역 버튼 */
+.contact_list_btn
+{
+    font-weight: bold;
+    font-size:0.8em;
+    border:0px;
+    background-color:#ffffff;
+    color:#ffae00;
+}
+
+#sitter_info {
+    position:relative;
+    padding:20px;
+}
+
+#sitter_text {
+    position:absolute;
+    padding-left:20px;
+    color:#C4C4C4;
+}
+
+#sitter_box {
+    padding:20px;
+    color:#C4C4C4;
+}
+
+#sitter_content {
+    padding:20px;
+    color:#545454;
+}
+
+#contact_button {
+    position:fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#confirm_box {
+    position:fixed;
+    display:none;
+    position:fixed;
+    width:100%;
+    height:auto;
+    bottom:81px; /*수정할때 다미에게 물어볼것*/
+    color:#C4C4C4;
+}
+
+#contact_box{
+    width:100%;
+    position:fixed;
+    display:none;
+    position:fixed;
+    bottom:0px;
+}
+
+/*clean code*/
+
+.boxStyle{
+        color:#C4C4C4; 
+        padding-left:5%; 
+        padding-right:5%
+    }
+    
+
+/*어두운 글씨*/
+.optionSytle{
+    padding-left:5px;
+    font-weight: bold;
+    color:#545454;
+}
+    
+.optionDetail{
+    border:4px solid #FFFFFF; 
+    height:30px;
+}
+
+#defaultBackground{
+    width:100%; height:100px;
+}
+
+.boxStyle{
+    color:#C4C4C4; 
+    padding-left:5%; 
+    padding-right:5%;
+    font-size:10pt;
+}
+
+

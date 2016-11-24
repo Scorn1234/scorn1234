@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% load staticfiles %}
+
+{% block head %}
+<!-- 로그인하지 않은 사용자가 북마크할 시 -->
+{% if message != None %}
+<script type="text/javascript">
+    window.alert("{{message}}");
+    window.location = "/accounts/login";
+</script>
+
+<style type="text/css">
+    html,body{height:100%}
+</style>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if next %}
+    {% if user.is_authenticated %}
+        <p>권한이 없는 페이지에 접근하였으니, 권한이 있는 계정으로 로그인하세요.</p>
+    {% else %}
+        <p>이 페이지를 보려면 로그인을 해야 합니다.</p>
+    {% endif %}
+{% endif %}
+
+<div style="background-color:#f5f5f5; height:100%">
+    <center>
+       
+        {% if form.errors %}
+        {{form.errors}}
+            <br>
+            <p style="color:red;">ID나 비밀번호가 일치하지 않습니다.</p>
+        {% endif %}
+        
+        <br>
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <table>
+                <tr style="border-bottom: 1px solid #f5f5f5"/>
+                    <td><span style="color:#c4c4c4">{{ form.username.label_tag }}</span></td>
+                    <td style="padding-left:10px">{{ form.username }}</td>
+                </tr>
+                <tr>
+                    <td><span style="color:#c4c4c4">{{ form.password.label_tag }}</span></td>
+                    <td style="padding-left:10px">{{ form.password }}</td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 10px solid #f5f5f5"/></td>
+                </tr>
+            </table>
+            
+            <button style="background-color:#ffae00;font-weight:bold;border:0px solid #FFFFFF;padding:10px 9%;color:#FFFFFF;" type="submit">로그인</button>
+            <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+        <br>
+        <a href="/accounts/regist" style="font-size:10pt; color:#c4c4c4; text-decoration:underline;">아직 <맡긴다>의 회원이 아니신가요?</a>
+        
+        <br>
+        <!--<a href="/posting/new" style="font-size:12pt">post_add_test</a>-->
+    </center>
+</div>
+
+{% endblock %}

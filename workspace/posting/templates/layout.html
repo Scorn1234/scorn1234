@@ -1,0 +1,58 @@
+{% load staticfiles %}
+<html>
+<head>
+    
+    <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" href="{% static 'posting.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    
+    <!-- 순서를 바꾸면 일부 js가 동작하지 않습니다. 바꿀 때 다미한테 말해주세요 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    
+    <meta name="viewport"
+      content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
+
+    <div>
+        <a href="http://me.naver.com/box/noti.nhn" class="{% static 'posting/star.jpeg' %}"></a>
+    </div>
+
+    <script>
+    // 시터 평점 이미지를 구하는 함수
+    function get_score_img(score){
+        return "{% static 'rates/" + score + ".png' %}";
+    }
+    </script>
+
+    {% if form.errors %}
+    <script type="text/javascript">
+        window.alert("정보를 다 입력해주세요");
+    </script>
+    {% endif %}
+    
+    {% block head %}
+    {% endblock %}
+
+</head>
+
+<body style='margin:0; padding:0; leftmargin:0 topmargin:0 rightmargin:0 bottommargin:0 width:100% height:100%'>
+    <script>
+        /*global $*/
+        //달력 출력 함수
+        $(document).ready(function() {
+            $(".datepicker").datepicker();
+        });
+        
+    </script>
+    
+    {% block content %}
+    {% endblock %}
+
+</body>
+</html>

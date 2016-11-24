@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<script type="text/javascript">
+        $( document ).delegate("#input_upload_sample", "click", function () {
+                window.Android.open("input_upload_sample", "thumbnail1");
+        })
+</script> 
+
+<div style="background-color:#f5f5f5; height:100%">
+    <center>
+        <br><br>
+        
+        <div style="color:red"> <font size = "2">
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-error">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-error">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+        </font> </div>
+
+        <span style="font-weight:bold;font-size:1.5em; color:#C4C4C4;">[&nbsp; &nbsp; &nbsp; 필수정보 &nbsp; &nbsp; &nbsp; ]</span>
+        </center>
+        
+        <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+        <center>
+            <table style="color:#C4C4C4;line-height:20px;">
+                <tr><!--아이디-->
+                    <td>
+                         아이디*
+                    </td>
+                    <td>{{ form.username }}</td>
+                </tr> 
+                <tr><!--비밀번호-->
+                    <td>
+                        비밀번호*
+                    </td>
+                    <td>{{ form.password1 }}</td>
+                </tr> 
+                <tr><!--비밀번호확인-->
+                    <td>
+                        비밀번호 확인*
+                    </td>
+                    <td>{{ form.password2 }}</td>
+                </tr> 
+                <tr><!--이메일-->
+                    <td>
+                        이메일*
+                    </td>
+                    <td>{{ form.email }}</td>
+                </tr> 
+                <tr><!--사진-->
+                    <td>사진</td>
+                    <td>{{ image_form.photo }}</td>
+                </tr>
+            </table>
+            <br>
+            
+            <button type="submit" style="background-color:#ffae00; font-weight:bold; border:0px solid #FFFFFF; padding:10px 30%; color:#FFFFFF;"> 가입 </button>
+            </center>
+        </form>
+
+</div>
+
+
+{% endblock %}

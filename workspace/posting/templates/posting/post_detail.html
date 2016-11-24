@@ -1,0 +1,242 @@
+{% extends "layout.html" %}
+{% load staticfiles %}
+
+{% block head %}
+<meta name="viewport" charset="utf-8" content="width=device-width">
+<style type="text/css">
+        html,body{height:100%}
+        </style>
+    <script>
+        /*global $*/
+        $(function() {
+            $("#contact_button").click(function() {
+                $('#contact_box').slideToggle();
+                
+                //컨택하기&닫기버튼
+                $("#cont_openclose").text(function(i, text){
+                    return text === "닫기" ? "컨택하기" : "닫기";
+                });
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        function bookmarkOK(){
+            if(confirm("북마크 페이지로 이동하시겠습니까?")){
+                /*global location*/
+                location.href="/bookmark/{{post.id}}/True";
+                return true;
+            
+            }else{
+                location.href="/bookmark/{{post.id}}/False";
+                return false;
+            }
+        }
+        function bookmarkNo(){
+                location.href="/bookmark/{{post.id}}/";
+        }
+    </script>
+    
+    <script type="text/javascript">
+        
+    </script>
+    
+    <script>
+     /*global $*/
+        $(function() {
+        while( $('#fitin div').height() > $('#fitin').height() ) {
+            $('#fitin div').css('font-size', (parseInt($('#fitin div').css('font-size')) - 1) + "px" );
+        }
+    });
+    </script>
+    
+
+{% endblock %}
+
+
+
+
+{% block content %}
+
+<table id="defaultBackground">
+    <tr>
+        
+        <td style="width:30%; padding:10px;">
+            <img src="{{sitter.photo}}" class="user_profile"/>
+        </td>
+        
+        <td style="padding:10px; color:#C4C4C4;">
+            
+            <div style="font-weight:bold; color:#C4C4C4;">{{post.title}}<br></div>
+            
+            {{sitter.name}}<br>
+            <img class="rate" src="{{STATIC_URL}}/static/rates/{{sitter.score}}.png" /><!--rating--><br>
+            {{sitter.address}}<br>
+            
+        </td>
+        
+    </tr>
+</table>
+
+
+<table id="sitter_box" style="font-size:10pt; width:100%">
+    <tr class=" border:4px solid #FFFFFF;height:30px;">
+        <td class="optionSytle" style="width:25%; padding-left:10px;"><span>시팅 가능한<br>동물종류</span></td>
+        <td style="padding-left:20px; padding-top:10px"><span>{%for species in post.species_of_animal%} {{species}} {%endfor%}</span></td>
+    </tr>
+    <tr class=" border:4px solid #FFFFFF;height:30px;">
+        <td class="optionSytle" style="padding-left:10px;padding-top:10px"><span>가능 날짜</span></td>
+        <td style="padding-left:20px; padding-top:10px" colspan="2"><span>{{post.start_date}} ~ {{post.end_date}}</span></td>
+    </tr>
+    <tr class=" border:4px solid #FFFFFF;height:30px;">
+        <td class="optionSytle" style="padding-left:10px;padding-top:10px"><span>시터 성별</span></td>
+        <td style="padding-left:20px; padding-top:10px"><span>{{sitter.gender}}</span></td>
+    </tr>
+    <tr class=" border:4px solid #FFFFFF;height:30px;">
+        <td class="optionSytle" style="padding-left:10px;padding-top:10px"><span> 애완동물 유무</span></td>
+        <td style="padding-left:20px; padding-top:10px"><span>{{post.number_of_animal}}마리</span></td>
+    </tr>
+    <tr class=" border:4px solid #FFFFFF;height:30px;">
+        <td class="optionSytle" style="padding-left:10px;padding-top:10px"><span>주거 형태</span></td>
+        <td style="padding-left:20px; padding-top:10px"><span>{{sitter.dwelling}}</span></td>
+    </tr>
+    <tr class=" border:4px solid #FFFFFF;height:30px;">
+        <td class="optionSytle" style="padding-left:10px;padding-top:10px"><span>마당 유무</span></td>
+        <td style="padding-left:20px; padding-top:10px"><span>{% if sitter.has_yard %} 있음 {% else %} 없음 {% endif %}</span></td>
+    <tr class=" border:4px solid #FFFFFF;height:30px;">
+        <td class="optionSytle" style="padding-left:10px;padding-top:10px"><span>가격</span></td>
+        <td style="padding-left:20px; padding-top:10px; color:#ffae00; font-weight:bold; font-size:1.3em;"><span>₩{{post.daily_payment}} /일</span></td>
+        
+        <!--bookmark-->
+        <td style="text-align:right; padding-right:20px;">
+            {% if post.marked == True %}
+            <a href="/bookmark/{{post.id}}/" onclick="return bookmarkNO();">
+                <img src="{% static 'posting/fav-on.jpg' %}" style="width:30px; height:30px;"/>
+                <br><span style="color:#ff0042;padding-top:5px;">좋아요</span></a>
+            {% else %}
+            <a href="#" onclick="bookmarkOK();">
+                <img src="{% static 'posting/fav-off.jpg' %}" style="width:30px; height:30px;"/>
+                <br><span style="color:#c4c4c4;">좋아요</span></a>
+            {% endif %}
+            </a>
+        </td>
+        
+        <td style="text-align:right; padding-right:20px;">
+            {% if user.username == sitter.name %}
+            <a href="posting/postid={{post.id}}">
+                <img src="{% static 'posting/sujeung.png' %}" style="width:30px; height:30px;"/>
+                <br><span style="color:#ffae00;">수정하기</span>
+            </a>
+            {% endif %}
+            
+        </td>
+        
+    </tr>
+</table>
+
+<hr></hr>
+
+
+
+<div id="sitter_content">
+    <span>
+        <div style="font-size:0.8em;">{{post.text}}</div>
+    </span>
+    <br>
+</div>
+
+
+<br><br><br>
+
+<!--여기 작은 지도-->
+<div id="sitter_pos" style="bottom:80px; width:80%; height:40%; margin:auto"></div>
+
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=a692e274b0bb1bd7b534fe1f6e2f2aa5&libraries=services"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=a692e274b0bb1bd7b534fe1f6e2f2aa5"></script>
+<script>
+var mapContainer = document.getElementById('sitter_pos'), // 지도를 표시할 div 
+    mapOption = {
+        /*global daum*/
+        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level:3, // 지도의 확대 레벨
+        draggable:false
+    };  
+
+// 지도를 생성합니다    
+
+var map = new daum.maps.Map(mapContainer, mapOption); 
+
+// 주소-좌표 변환 객체를 생성합니다
+var geocoder = new daum.maps.services.Geocoder();
+
+// 주소로 좌표를 검색합니다
+geocoder.addr2coord('{{sitter.address}}', function(status, result) {
+//대골길 47-10
+    // 정상적으로 검색이 완료됐으면 
+     if (status === daum.maps.services.Status.OK) {
+
+        var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new daum.maps.Marker({
+            map: map,
+            position: coords
+        });
+
+        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        var infowindow = new daum.maps.InfoWindow({
+            content: '<div style="padding:5px;">{{sitter.name}}</div>'
+        });
+        infowindow.open(map, marker);
+    } 
+});    
+</script>
+<div style="font-size:0.95em; width:100%; color:f5f5f5; border:0px solid #f5f5f5; padding:14px;">____</div><!-- 공간 차지용 더미 -->
+<div id="contact_button" style="z-index:999;">
+    <center>
+        <div class="buttonStyle">
+            <div id="cont_openclose">
+            컨택하기</div>
+        </div>
+    </center>
+</div>
+
+
+<div id="contact_box" class="slide-down" style="background:#f5f5f5;width:100%;height:auto; border-top:2px solid #c4c4c4; z-index:90; padding:15px">
+    <center>
+    <form method="POST" action=""> {% csrf_token %}
+    <table style="font-size:10pt;">
+        <tr>
+            <th colspan="2" style="text-align:center; padding-right:10px;">
+            <span>{{form.start_date}}</span><img src="{% static 'icons/wave.png' %}" height="20px" />
+            <span>{{form.end_date}}</span>
+            </th>
+        </tr>    
+        <tr>
+            <td class="optionSytle"><span>맡길 동물 종류</span></td>
+            <td><span style="color:#C4C4C4;">{%for species in form.species_of_animal%}{{species}}{%endfor%}</span><br></td>
+        </tr>
+        <tr>
+            <td class="optionSytle"><span>맡길 동물의 마리 수</span> </td>
+            <td><span style="color:#C4C4C4;">{%for number in form.number_of_animal%}{{number}}{%endfor%}</span><br></td>
+        </tr>
+        <tr>
+            <td class="optionSytle"><span>기타 요청 사항</span></td>
+            <td class="inputStyle"><span>{{form.extra_request}}</span></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <center><br>
+                    <button type="submit" style="height:30px; width:90%; border:0px solid #f5f5f5;">
+                        컨택
+                    </button>
+                </center>
+            </td>
+        </tr>
+    </table>
+    </form>
+    <div style="font-size:0.95em; width:100%; color:f5f5f5; border:0px solid #f5f5f5; padding:14px;">____</div><!-- 공간 차지용 더미 -->
+    </center>
+</div>
+
+{% endblock %}

@@ -1,0 +1,255 @@
+{% extends "layout.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<!-- 이거 없으면 폰트 깨짐 -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+<!-- 날짜 -->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<!-- 열기 닫기-->
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+    /*global $*/
+    $(function () {
+        // 옵션 버튼 클릭
+        $(".slide_openclose").click(function (){
+            $("div#checkmenu").slideToggle()
+            
+            //열기닫기할때 text바꿈
+            $(this).text(function (i, text) {
+            return text === "닫기▲" ? "펼치기▼" : "닫기▲";
+            });
+        });
+        //펼치기 버튼
+        $("#open_option").click(function () {
+            $("#option_box").slideToggle()
+            
+            //옵션 열기 닫기 text바꾸기
+            $(this).text(function (i, text) {
+                return text === "옵션 닫기▲" ? "옵션 열기▼" : "옵션 닫기▲";
+            });
+        });
+});
+
+</script>
+
+{% if message %}
+    <script>
+        var message = "{{message}}"
+        window.alert(message)
+    </script>
+{% endif %}
+<style>
+.calBox {
+        width: 46%;
+        border: 0px;
+}
+
+span {
+    margin:-2px; /* 아이콘 간격 붙임 전용 margin값 */
+}
+</style>
+
+<!-- 여기까지 -->
+
+
+<!-- 옵션 버튼 -->
+
+{% if is_show_post %}
+<!--옵션 열기 접기-->
+<div id="option_box" style="display:none;">
+    <!-- 옵션 박스, 여기 아래서 부터 '옵션 열기▼' 누르면 보여지는 것 -->
+        <div>
+            <div style="background:#f5f5f5; padding:10px 20px" class="post_find">
+                <form method="post" action="/posting/search" style="background-color:#f5f5f5;">{% csrf_token %}
+
+                <!-- 날짜 -->
+                <table width="100%";>
+                    <tr>
+                        <td><!--달력 이미지-->
+                            <img src="{% static 'icons/calendar.jpg'%}"
+                                 style="height:20px; width:20px; position:relative; "/>
+                        </td>
+                        <td style="color:#C4C4C4; border:5px solid #f5f5f5;">
+                            {{form.start_date}}
+                            <font style="color:#C4C4C4;">~</font>
+                            {{form.end_date}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><!-- 찾기버튼 -->
+                            <!--<a href="https://petsitter2-damidam125.c9users.io/map">-->
+                                <img src="{%static 'icons/search.jpg'%}" style="height:20px; width:20px;"/>
+                            <!--</a>-->
+                        </td>
+                        <td style="color:#C4C4C4; background-color:#FFFFFF; height:30px; border:5px solid #f5f5f5;"/>
+                            <!-- 지역 -->
+                            <!-- 지도 창 열기 -->
+                            <a href="https://petsitter2-damidam125.c9users.io/map" style="color:#c4c4c4;">
+                            <div style="width:100%;" />지도 검색</div>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="color:#C4C4C4; background-color:#FFFFFF; height:30px; border:5px solid #f5f5f5;"
+                            colspan="2"><!-- 옵션 -->
+                            <div style="float:left">옵션</div>
+                            <div class="checkbutton" style="float:right"/>
+                            <div class="slide_openclose" style="font-size:9pt;">펼치기▼</div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+      
+
+            <!-- 체크박스 -->
+            <div id="checkmenu" style="display:none;">
+                <center>
+                <table style="font-size:10pt;background-color:#FFFFFF; border:1px solid #FFFFFF; width: 98%;">
+                    <!--동물 종류 {%for species in form_for_show.species_of_animal%}{{species}}{%endfor%}<br>-->
+                    <tr>
+                        <td class="optionSytle" style="color:#545454;">
+                            <span>동물 종류</span>
+                        </td>
+                        <td class="basicStyle">
+                            <span style="color:#C4C4C4;">{%for species in form.species_of_animal%}{{species}}{%endfor%}</span>
+                        </td>
+                    </tr>
+                    <!--{%for species in form_for_show.species_of_animal%}{{species}}{%endfor%}<br>-->
+                    <tr>
+                        <td class="optionSytle" style="color:#545454;">
+                            <span>시터 성별</span>
+                        </td>
+                        <td class="basicStyle">
+                            <span style="color:#C4C4C4;">{% for gender in form.gender %} {{gender}} {% endfor %}</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="optionSytle" style="color:#545454;">
+                            <span>시터의<br>애완동물 유무</span>
+                        </td>
+                        <td class="basicStyle">
+                            {%for number in form.animal_sitter_own%}{{number}}{%endfor%}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="optionSytle" style="color:#545454;">
+                            <span>주거 형태</span>
+                        </td>
+                        <td class="basicStyle">
+                            {% for home in form.dwelling%} {{home}} {% endfor %}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="optionSytle" style="width:35%; color:#545454;">
+                            <span>마당 유무</span>
+                        </td>
+                        <td class="basicStyle">
+                            {% for yard in form.has_yard %} {{yard}} {% endfor %}
+                        </td>
+                    </tr>
+                </table>
+            </center>
+            </div>
+            <br>
+        <div id="find_sitter_button" style="background-color:f5f5f5;">
+            <center>
+                <button type="submit" style="height:30px; width:80%; border:0px solid #f5f5f5;">
+                    나에게 맞는 시터 찾기
+                </button>
+            </center>
+        </div>
+    </div>
+    </div>
+</form>
+</div>
+<div id="open_option" class="buttonStyle">옵션 열기▼</div>
+
+{% endif %}
+
+<!-- 옵션열기 버튼 끝 -->
+
+
+<!-- 리스트 -->
+{% for post in posts %}
+
+
+
+
+<div style="cursor: pointer;" onclick="window.location='/posting/id={{post.id}}';">
+<table style="width:100%;">
+    <tr>
+        <td rowspan="3" style="width:100px; text-align:center;"><img src="{{post.author.photo}}" class="user_profile"/></td>
+        <td style="text-align:right; padding-right:10px; padding-top:10px;">
+            <span>
+                {%if post.author.dwelling == "apart" %}
+                    <img src="{% static 'icons/apart.svg' %}" class="sitter_icon"/>
+                    {% elif post.author.dwelling == "villa" %}
+                    <img src="{% static 'icons/villa.svg' %}" class="sitter_icon"/>
+                    {% elif post.author.dwelling == "house" %}
+                    <img src="{% static 'icons/house.svg' %}" class="sitter_icon"/>
+                    {% elif post.author.dwelling == "office_hotel" %}
+                    <img src="{% static 'icons/office_hotel.svg' %}" class="sitter_icon"/>
+                    {% else %}
+                    <img src="{% static 'icons/etc.svg' %}" class="sitter_icon"/>
+                    {% endif %}
+            </span>
+            <span style="display:inline-block;">
+                {%if post.author.number_of_animal == 0 %}
+                    <img src="{% static 'icons/no_pet.svg' %}" class="sitter_icon"/>
+                    {% else %}
+                    <img src="{% static 'icons/has_pet.svg' %}" class="sitter_icon"/>
+                    {% endif %}
+            </span>
+            <span>
+                {% if post.author.has_yard %}
+                <img src="{% static 'icons/has_yard.svg' %}" class="sitter_icon"/>
+                {% else %}
+                <img src="{% static 'icons/no_yard.svg' %}" class="sitter_icon"/>
+                {% endif %}
+            </span>
+            <span>
+                {% if post.author.gender == "여성" %}
+                <img src="{% static 'icons/female.svg' %}" class="sitter_icon"/>
+                {% else %}
+                <img src="{% static 'icons/male.svg' %}" class="sitter_icon"/>
+                {% endif %}
+            </span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="basicStyle" style="padding-left:5px;">
+                <div style="font-weight:bold; white-space:nowrap; width:200px; overflow:hidden; text-overflow:ellipsis;">{{post.title}}<br></div>
+                <div style="font-size:0.8em;">{{post.author.name}}<br></div>
+                <img class="rate" src="{{STATIC_URL}}/static/rates/{{post.author.score}}.png"/><br>
+                <div style="font-size:0.7em;">{{post.start_date}} ~ {{post.end_date}}<br></div>
+                <div style="font-size:0.8em;">{{post.author.address}}</div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:right;color:#ffae00; padding-right:10px; font-size:14pt; font-weight:bold; padding-bottom:10px;">₩{{post.daily_payment}} /일</td>
+    </tr>
+</table>
+</div>
+
+<div style="background-color: #f5f5f5; border: 0 none; height: 2px;"></div>
+
+{% endfor %}
+
+
+{% if is_sitter and is_show_post %}
+
+<a href="/posting/new">
+    <img src="{% static 'posting/add_post.jpg' %}" class="add_post"/>
+</a></th>
+
+{% endif %}
+
+{% endblock %}

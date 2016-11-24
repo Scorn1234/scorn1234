@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+{% load staticfiles %}
+
+{% block head %}
+<!-- 글 작성 페이지-->
+
+<style>
+    .titleStyle{
+        width:100%;
+        border: 1px solid; 
+    }
+    
+    .boxStyle{
+        color:#C4C4C4; 
+        padding-left:5%; 
+        padding-right:5%
+    }
+</style>
+<meta name="viewport" charset="utf-8" content="width=device-width">
+    <style type="text/css">
+        html,body{height:85%}
+    </style>
+
+
+{% endblock %}
+
+
+
+
+{% block content %}
+
+<form method="POST"> {% csrf_token %}
+    <br>
+    <div class = "boxStyle" style="font-size:10pt;">
+        {{form.title}}<br>
+        <hr/>
+        <table style="width:100%; font-size:10pt;">
+            <tr>
+                <td class="optionSytle" style="width:35%">
+                    <span>기간</span>
+                </td>
+                <td style="color:#C4C4C4;">
+                    {{form.start_date}} ~ {{form.end_date}}
+                </td>
+            </tr>
+            
+            
+            <tr>
+                <td class="optionSytle" style="width:35%">
+                    <span>시팅 가능한 동물 종류</span>
+                </td>
+                <td style="color:#C4C4C4;">
+                    {%for species in form.species_of_animal%}{{species}}{% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td class="optionSytle" style="width:35%">
+                    <span>가격</span>
+                </td>
+                <td style="color:#C4C4C4;">
+                    {{form.daily_payment}}₩/일
+                    <!-- <span><input type="number" style="width:30%; text-align: right; 'ime-mode:disabled;" pattern="[0-9]*" inputmode="numeric" min="0" onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)" />원/일</span></td>-->
+                </td>
+            </tr>
+        </table>
+        <hr/>
+        <div>
+            {{form.text}}
+            
+        </div>
+         <br>
+    </div>
+    <br>
+    
+    <div>
+        <button type="submit" class ="buttonStyle" style="position:fixed; bottom:0; width:100%; padding:0px;">
+            <center>
+                <div style="padding:10px;">
+                    글 수정
+                </div>
+            </center>
+        </button>
+   </div>
+    
+    
+</form>
+
+{% endblock %}

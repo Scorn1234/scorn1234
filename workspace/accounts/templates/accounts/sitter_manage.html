@@ -1,0 +1,134 @@
+{% extends "layout.html" %}
+{% load staticfiles %}
+{% block head %}
+
+<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
+<script>
+/*global daum*/
+    function sample6_execDaumPostcode() {daum.postcode.load(function(){
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullAddr = ''; // 최종 주소 변수
+                var extraAddr = ''; // 조합형 주소 변수
+
+                // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    fullAddr = data.roadAddress;
+
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    fullAddr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+                if(data.userSelectedType === 'R'){
+                    //법정동명이 있을 경우 추가한다.
+                    if(data.bname !== ''){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있을 경우 추가한다.
+                    if(data.buildingName !== ''){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+                }
+                document.getElementById('id_address').value = fullAddr;
+            }
+        }).open();
+    });
+}
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<div style="background-color:#f5f5f5; height:100%;">
+    <center>
+        
+
+        <br><br>
+        
+        {{form.errors}}
+        {% if is_add == True %}
+        <span style="font-weight:bold; font-size:1.5em; color:#C4C4C4;">[&nbsp; &nbsp; &nbsp; 시터 정보 등록 &nbsp; &nbsp; &nbsp; ]</span>
+        {% else %}
+        <span style="font-weight:bold; font-size:1.5em; color:#C4C4C4;">[&nbsp; &nbsp; &nbsp; 시터 정보 수정 &nbsp; &nbsp; &nbsp; ]</span>
+        {% endif %}
+        
+        {%if is_add %}
+            <form method="POST" action="/accounts/sitter/add">
+        {% else %}
+            <form method="POST" action="accounts/sitter/edit">
+        {% endif %}
+        {% csrf_token %}
+        <table style="color:#C4C4C4; line-height:2.0;">
+            <tr>
+                <td>
+                    <img src="{%static 'accounts/quill-2.jpg'%}" style="height:25px;weight:25px;">
+                </td>
+                <td>
+                    성별
+                </td> 
+                <td>{% for i in form.gender %} {{i}} {% endfor %} </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{%static 'accounts/quill-2.jpg'%}" style="height:25px;weight:25px;">
+                </td>
+                <td>
+                    주거형태
+                </td> 
+                <td>{% for i in form.dwelling %} {{i}} {% endfor %} </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{%static 'accounts/quill-2.jpg'%}" style="height:25px;weight:25px;">
+                </td>
+                <td>
+                    마당 유무
+                </td> 
+                <td>{% for i in form.has_yard %} {{i}} {% endfor %} </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{%static 'accounts/quill-2.jpg'%}" style="height:25px;weight:25px;">
+                </td>
+                <td>
+                    핸드폰 번호
+                </td> 
+                <td>{% for i in form.phoneNumber %} {{i}} {% endfor %} </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{%static 'accounts/quill-2.jpg'%}" style="height:25px;weight:25px;">
+                </td>
+                <td>
+                    주소
+                </td>
+                <td>
+                    {{form.address}}
+                    <input type="button" onclick="sample6_execDaumPostcode()" value="주소 찾기">
+                </td>
+            </tr>
+        </table>
+        
+        
+        <br>
+        {% if is_add == True %}
+            <button type="submit" style="background-color:#ffae00; font-weight:bold; border:0px solid #FFFFFF; padding:10px 4%; color:#FFFFFF;">등록 하기</button>
+            <input type="button" style="background-color:#C4C4C4; font-weight:bold; border:0px solid #FFFFFF; padding:10px 4%; color:#FFFFFF;" value="넘어가기" onclick="location.href='/accounts' ">
+        {% else %}
+            <button type="submit" style="background-color:#ffae00; font-weight:bold; border:0px solid #FFFFFF; padding:10px 4%; color:#FFFFFF;">수정 하기</button>
+            <input type="button" style="background-color:#C4C4C4; font-weight:bold; border:0px solid #FFFFFF; padding:10px 4%; color:#FFFFFF;" value="취소" onclick="location.href='/accounts' ">
+        {% endif %}
+        </form>
+    </center>
+</div>
+
+
+{% endblock %}

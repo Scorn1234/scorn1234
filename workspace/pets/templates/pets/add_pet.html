@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+{% load staticfiles %}
+<!-- style -->
+<link rel="stylesheet" type="text/css" href="posting/static/posting.css">
+<link rel="stylesheet" type="text/css" href="posting/static/style.css">
+
+{% block content %}
+
+<style>
+    td {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+</style>
+
+<div style="width:100%; height:100%; display:table;">
+    
+    <div style="padding:15px;">
+
+    <!-- 메뉴 -->
+    <div style="background-color:#FFFFFF; width:100%; border-bottom:2px solid #f5f5f5; padding:5px;">
+        <img src="{%static 'icons/clipboard-2.jpg'%}" style="weight:25px; height:25px;">
+        <span style="padding-left:10px; color:#545454; padding-left:10px;"><strong>펫 프로필 추가</strong></span>
+    </div>
+
+
+    <form method="POST" style="background-color:#FFFFFF;"> {% csrf_token %}
+        <table style="color:#545454;width:100%;">
+
+            <!-- 이름 -->
+            <tr>
+                <td style="width:25%;">이름</td>
+                <td>{{form.name}}</td>
+            </tr>
+
+            <!-- 사진 -->
+            <tr>
+                <td  style="width:25%;">사진</td>
+                <td>{{form.photo}}</td>
+            </tr>
+
+            <!-- 종류 -->
+            <tr style="padding-left:30px;">
+                <td  style="width:25%;">종류</td>
+                <td>{{form.animal_type}}</td>
+            </tr>
+
+            <!-- 성별 -->
+            <tr>
+                <td  style="width:25%;">성별</td>
+                <td>{{form.sex}}</td>
+            </tr>
+
+            <!-- 생일 -->
+            <tr>
+                <td  style="width:25%;">생일</td>
+                <td>{{form.birth_date}}</td>
+            </tr>
+
+            <!-- 특이사항 -->
+            <tr>
+                <td style="width:25%;">특이<br>사항</td>
+                <td>{{form.feature}}</td>
+            </tr>
+        </table>
+    </div>
+        <br>
+
+        <!--공간더미-->
+        <div style="padding:bottom:20px; color:#FFFFFF">_</div>
+        <div>
+            <button type="submit" style="position:fixed; bottom:0; width:100%; padding: 0px; border:0px; margin:0px;">
+                <center>
+                    <a href="/pets/pet_profile">
+                        <div class="buttonStyle"> 펫 등록</div>
+                    </a>
+                </center>
+            </button>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}
